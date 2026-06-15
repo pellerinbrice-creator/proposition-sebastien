@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposition · Module Vente & Closing pour la formation impulsion.com</title>
+<style>
+  :root {
+    --ink: #14161a;
+    --ink-soft: #3a3f47;
+    --paper: #f7f5f0;
+    --paper-pure: #ffffff;
+    --line: #e0ddd4;
+    --line-strong: #c9c5b8;
+    --accent: #2b6a5e;        /* vert profond, sobre, pas le terracotta par défaut */
+    --accent-warm: #c6622d;   /* utilisé une seule fois, sur le geste de prix */
+    --muted: #6d7178;
+    --shadow: 0 1px 0 rgba(20,22,26,0.04), 0 18px 40px -28px rgba(20,22,26,0.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  .display {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    border-bottom: 1px solid var(--line);
+    background: rgba(247,245,240,0.85);
+    backdrop-filter: blur(8px);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .topbar .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .mark {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 700; letter-spacing: 0.02em;
+  }
+  .mark .badge {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--ink); color: var(--paper);
+    display: grid; place-items: center;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em;
+  }
+  .mark small { color: var(--muted); font-weight: 500; font-size: 0.8rem; }
+  .topbar a.cta-mini {
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    color: var(--ink); border: 1px solid var(--line-strong);
+    padding: 8px 16px; border-radius: 999px; transition: all .2s ease;
+  }
+  .topbar a.cta-mini:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 92px 0 64px; }
+  .hero .eyebrow { margin-bottom: 22px; }
+  .hero h1 {
+    font-size: clamp(2.3rem, 5.5vw, 3.7rem);
+    margin-bottom: 26px;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero .lead {
+    font-size: 1.18rem; color: var(--ink-soft); max-width: 620px;
+  }
+  .hero .meta-row {
+    margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 32px 56px;
+  }
+  .hero .meta-row div span {
+    display: block; font-size: 0.74rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 4px;
+  }
+  .hero .meta-row div strong { font-size: 1rem; font-weight: 600; }
+
+  /* ---------- Section scaffold ---------- */
+  section { padding: 64px 0; }
+  .section-head { margin-bottom: 40px; }
+  .section-head .eyebrow { margin-bottom: 14px; }
+  .section-head h2 {
+    font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+  }
+  .section-head p { margin-top: 14px; color: var(--ink-soft); max-width: 620px; }
+
+  .divider-soft { border: 0; border-top: 1px solid var(--line); }
+
+  /* ---------- Problem framing ---------- */
+  .framing {
+    background: var(--ink); color: var(--paper);
+    border-radius: 18px; padding: 44px 40px;
+    box-shadow: var(--shadow);
+  }
+  .framing .eyebrow { color: #8fcabd; }
+  .framing h2 { color: var(--paper); font-size: clamp(1.5rem,3.2vw,2.05rem); margin: 14px 0 18px; }
+  .framing p { color: #cdd0d4; max-width: 640px; }
+  .framing p + p { margin-top: 14px; }
+  .framing .tension {
+    margin-top: 26px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 26px;
+  }
+  .framing .tension h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: #8fcabd; margin-bottom: 8px; }
+  .framing .tension p { color: #cdd0d4; font-size: 0.95rem; }
+  @media (max-width: 620px){ .framing .tension { grid-template-columns: 1fr; } }
+
+  /* ---------- Layer progression (signature) ---------- */
+  .layers { display: grid; gap: 22px; }
+  .layer {
+    position: relative;
+    background: var(--paper-pure);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 34px 34px 34px 40px;
+    box-shadow: var(--shadow);
+  }
+  .layer::before {
+    content: "";
+    position: absolute; left: 0; top: 28px; bottom: 28px;
+    width: 4px; border-radius: 4px;
+    background: var(--accent);
+  }
+  .layer.is-next::before { background: var(--line-strong); }
+  .layer .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700; color: var(--accent); margin-bottom: 12px;
+  }
+  .layer.is-next .tag { color: var(--muted); }
+  .layer .tag .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .layer h3 { font-size: 1.45rem; margin-bottom: 8px; }
+  .layer .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 22px; }
+  .layer ul { list-style: none; display: grid; gap: 13px; }
+  .layer li { position: relative; padding-left: 26px; color: var(--ink-soft); font-size: 0.98rem; }
+  .layer li::before {
+    content: ""; position: absolute; left: 2px; top: 9px;
+    width: 8px; height: 8px; border: 1.5px solid var(--accent);
+    border-radius: 2px; transform: rotate(45deg);
+  }
+  .layer.is-next li::before { border-color: var(--line-strong); }
+  .layer li strong { color: var(--ink); font-weight: 600; }
+  .layer .note {
+    margin-top: 22px; font-size: 0.9rem; color: var(--muted);
+    border-top: 1px dashed var(--line-strong); padding-top: 16px;
+  }
+
+  .connector {
+    text-align: center; color: var(--line-strong);
+    font-size: 1.4rem; line-height: 1; margin: -8px 0;
+  }
+
+  /* ---------- AI highlight strip ---------- */
+  .ai-strip {
+    margin-top: 30px;
+    background: linear-gradient(180deg, rgba(43,106,94,0.06), rgba(43,106,94,0.02));
+    border: 1px solid rgba(43,106,94,0.22);
+    border-radius: 14px; padding: 26px 28px;
+  }
+  .ai-strip .eyebrow { margin-bottom: 8px; }
+  .ai-strip h4 { font-size: 1.1rem; margin-bottom: 8px; }
+  .ai-strip p { color: var(--ink-soft); font-size: 0.96rem; }
+
+  /* ---------- Pricing ---------- */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 700px){ .pricing-grid { grid-template-columns: 1fr; } }
+  .price-card {
+    background: var(--paper-pure); border: 1px solid var(--line);
+    border-radius: 16px; padding: 30px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+  }
+  .price-card.featured { border-color: var(--accent); border-width: 1.5px; }
+  .price-card .label {
+    font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700; color: var(--muted); margin-bottom: 16px;
+  }
+  .price-card.featured .label { color: var(--accent); }
+  .price-line { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .price-old {
+    font-size: 1.05rem; color: var(--muted); text-decoration: line-through;
+    text-decoration-color: var(--accent-warm); text-decoration-thickness: 2px;
+  }
+  .price-new { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.02em; }
+  .price-card .unit { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .price-card .desc { color: var(--ink-soft); font-size: 0.95rem; flex-grow: 1; }
+  .pref-flag {
+    display: inline-block; margin-top: 16px;
+    font-size: 0.78rem; font-weight: 600; color: var(--accent-warm);
+    background: rgba(198,98,45,0.08); border: 1px solid rgba(198,98,45,0.25);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .addon {
+    margin-top: 22px; background: var(--paper-pure);
+    border: 1px dashed var(--line-strong); border-radius: 14px;
+    padding: 24px 28px; display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: space-between; gap: 14px;
+  }
+  .addon .left .label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 700; }
+  .addon .left h4 { font-size: 1.15rem; margin: 4px 0 4px; }
+  .addon .left p { color: var(--ink-soft); font-size: 0.92rem; max-width: 460px; }
+  .addon .right { text-align: right; }
+  .addon .right .amount { font-size: 1.6rem; font-weight: 700; }
+  .addon .right .per { font-size: 0.82rem; color: var(--muted); }
+
+  /* ---------- Why me ---------- */
+  .why { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 620px){ .why { grid-template-columns: 1fr; } }
+  .why .who {
+    width: 64px; height: 64px; border-radius: 14px;
+    background: var(--ink); color: var(--paper);
+    display: grid; place-items: center; font-family: "Fraunces", serif;
+    font-size: 1.5rem; font-weight: 600;
+  }
+  .why p { color: var(--ink-soft); }
+  .why p strong { color: var(--ink); }
+
+  /* ---------- CTA ---------- */
+  .final {
+    background: var(--ink); color: var(--paper);
+    border-radius: 20px; padding: 56px 44px; text-align: center;
+  }
+  .final h2 { color: var(--paper); font-size: clamp(1.7rem,3.6vw,2.4rem); margin-bottom: 14px; }
+  .final p { color: #cdd0d4; max-width: 520px; margin: 0 auto 30px; }
+  .final a {
+    display: inline-block; background: var(--paper); color: var(--ink);
+    font-weight: 700; text-decoration: none; padding: 15px 34px;
+    border-radius: 999px; transition: transform .15s ease, box-shadow .2s ease;
+  }
+  .final a:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -12px rgba(0,0,0,0.5); }
+  .final .deadline {
+    margin-top: 22px; display: inline-block;
+    font-size: 0.85rem; color: var(--paper);
+    background: rgba(198,98,45,0.18); border: 1px solid rgba(198,98,45,0.45);
+    padding: 8px 18px; border-radius: 999px;
+  }
+  .final .deadline strong { color: #f0a878; }
+  .final .ps { margin-top: 16px; font-size: 0.85rem; color: #9aa0a6; }
+
+  footer { padding: 40px 0 60px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+  footer .mark { justify-content: center; margin-bottom: 10px; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="wrap">
+      <span class="mark"><span class="badge">BP</span> Proposition <small>· pour Sébastien Rech</small></span>
+      <a href="#suite" class="cta-mini">Lancer le socle</a>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Module Vente &amp; Closing · Formation impulsion.com</p>
+      <h1 class="display">Un module vente qui parle enfin au débutant <em>sans preuve sociale.</em></h1>
+      <p class="lead">Ta formation forme déjà des media buyers redoutables sur la technique. Il manque la pièce qui transforme un appel en client signé, surtout quand l'apprenant n'a encore ni cas client, ni références, ni confiance. C'est exactement ce trou que ce module vient combler.</p>
+      <div class="meta-row">
+        <div><span>Livré par</span><strong>Brice Pellerin</strong></div>
+        <div><span>Format</span><strong>Contenu clé en main</strong></div>
+        <div><span>Angle</span><strong>Posture + IA</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <section style="padding-top:24px;">
+    <div class="wrap">
+      <div class="framing reveal">
+        <p class="eyebrow">Le constat</p>
+        <h2 class="display">La structure existe. L'humain derrière l'appel, non.</h2>
+        <p>La première version du module pose des bases solides : la trame en six phases, la règle 70/30, la technique du silence. Tout ça reste. Mais le contenu suppose un freelance qui a déjà des clients, des dashboards à montrer, un accès aux comptes du prospect. Or l'apprenant type arrive en appel avec zéro preuve sociale, et c'est précisément là qu'il décroche.</p>
+        <div class="tension">
+          <div>
+            <h4>Ce qui manque</h4>
+            <p>La posture du consultant quand on n'a aucune référence. Les objections propres au débutant. Les démos sans accès au compte. Tout l'avant et l'après-rendez-vous.</p>
+          </div>
+          <div>
+            <h4>Ce qu'on ajoute</h4>
+            <p>Une ossature complète, des scripts d'objection avec leur logique psychologique, et l'IA branchée sur le follow-up, dans le prolongement direct de ton cours Claude Code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="suite">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Ce qu'on livre</p>
+        <h2 class="display">Deux couches, pensées dans le temps.</h2>
+        <p>Un socle complet et autonome d'abord. Puis une couche d'affinage qui se déclenche plus tard, quand tes apprenants auront ramené de la matière réelle. Tu n'achètes pas une version figée, tu démarres une base vivante.</p>
+      </div>
+
+      <div class="layers">
+        <article class="layer reveal">
+          <span class="tag"><span class="dot"></span>Layer 1 · Le socle</span>
+          <h3 class="display">L'ossature complète du module</h3>
+          <p class="sub">Livrable, autonome, prêt à enregistrer dès réception.</p>
+          <ul>
+            <li><strong>Posture &amp; stratégie.</strong> Tenir la position du consultant sans aucun client, retourner « je n'ai pas de références » en argument de vente, choisir entre appel unique et second rendez-vous.</li>
+            <li><strong>Avant le rendez-vous.</strong> Préparer une démo percutante même sans accès au compte du prospect, check-list mentale et logistique des 15 minutes qui précèdent l'appel.</li>
+            <li><strong>Pendant le rendez-vous.</strong> Découverte qui fait émerger la douleur et le budget sans les demander, 9 objections scriptées mot à mot avec leur levier psychologique, contre-offre cohérente avec la réalité tarifaire du débutant.</li>
+            <li><strong>Après le rendez-vous.</strong> Séquence de relance à valeur, CRM minimal viable, et la boucle qui fait monter les prix à mesure que les preuves s'accumulent.</li>
+          </ul>
+          <div class="ai-strip">
+            <p class="eyebrow">Intégration IA</p>
+            <h4>Le follow-up branché sur Claude Code</h4>
+            <p>Tes apprenants seront sensibilisés à Claude Code grâce à toi. On en fait un usage concret : un workflow transcript d'appel, prompt, email de relance prêt à relire, et un prompt de relance personnalisable où ils n'ont qu'à remplir les variables. Je donne l'essentiel de la mécanique commerciale ; c'est une partie qu'on cale ensemble et que tu valides côté technique, là où tu maîtrises mieux que moi. Le follow-up, là où se gagnent réellement les ventes, devient leur premier réflexe IA.</p>
+          </div>
+        </article>
+
+        <div class="connector reveal">↓</div>
+
+        <article class="layer is-next reveal">
+          <span class="tag"><span class="dot"></span>Layer 2 · L'affinage</span>
+          <h3 class="display">La mise à jour terrain, quand tu veux</h3>
+          <p class="sub">Optionnel, à la demande. Pas un abonnement.</p>
+          <ul>
+            <li>On revient affiner les objections et les scripts avec le <strong>verbatim réel</strong> de tes apprenants : ce qu'ils entendent vraiment en appel, les formulations qui closent.</li>
+            <li>On traite les <strong>difficultés concrètes</strong> remontées du terrain plutôt que des cas théoriques.</li>
+            <li>Une partie qu'on peut <strong>co-rédiger ensemble</strong>, en fonction de ce que tu observes côté formation.</li>
+          </ul>
+          <p class="note">Le socle est une première version aboutie, pas un point final. Cette couche se déclenche uniquement quand il y a assez de matière pour qu'elle ait de la valeur, donc jamais à vide.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-soft">
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">L'investissement</p>
+        <h2 class="display">Tarif préférentiel.</h2>
+        <p>Les montants ci-dessous sont un geste assumé vu qu'on se connaît. Le prix barré, c'est ce que facturerait la prestation en dehors de ce cadre.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <span class="label">Socle · contenu brut</span>
+          <div class="price-line">
+            <span class="price-old">2 000 €</span>
+            <span class="price-new">1 500 €</span>
+          </div>
+          <p class="unit">Ossature complète des 4 blocs · textes &amp; scripts prêts à intégrer</p>
+          <p class="desc">Toute la matière structurée, prête à être enregistrée. Tu intègres toi-même dans ton support.</p>
+          <span class="pref-flag">Tarif préférentiel</span>
+        </div>
+
+        <div class="price-card featured reveal">
+          <span class="label">Socle + slides</span>
+          <div class="price-line">
+            <span class="price-old">2 300 €</span>
+            <span class="price-new">1 800 €</span>
+          </div>
+          <p class="unit">Tout le socle · supports visuels prêts à l'emploi</p>
+          <p class="desc">Le contenu mis en slides, structuré pour s'insérer dans ta génération Claude Code. Tu n'as plus qu'à enregistrer la vidéo.</p>
+          <span class="pref-flag">Tarif préférentiel</span>
+        </div>
+      </div>
+
+      <div class="addon reveal">
+        <div class="left">
+          <span class="label">Layer 2 · Affinage</span>
+          <h4>Séance de mise à jour terrain</h4>
+          <p>Déclenchée quand tu le veux, une fois les retours apprenants accumulés. Facturée à la séance, sans engagement.</p>
+        </div>
+        <div class="right">
+          <div class="amount">550 €</div>
+          <div class="per">par séance · à la demande</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-soft">
+
+  <section>
+    <div class="wrap">
+      <div class="why reveal">
+        <div class="who display">BP</div>
+        <div>
+          <p class="eyebrow" style="margin-bottom:10px;">Pourquoi moi</p>
+          <p><strong>Une dizaine d'années de vente B2B et B2C, majoritairement B2B, dont ex-Country Manager d'un SaaS</strong> (équipe de 60, P&amp;L, cycles de closing en R1+R2). Plus une vraie expérience de closing en coaching, sur des scripts émotionnels et des objections prix, exactement la psychologie d'achat de la clientèle que visent tes apprenants : TPE, artisans, coachs, indépendants qui décident seuls, avec leur propre argent. Je ne théorise pas la vente, je l'ai pilotée.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="final reveal">
+        <h2 class="display">On lance le socle ?</h2>
+        <p>Je démarre par le cadrage et l'architecture, tu valides une fois en cours de route, puis à la livraison. Le Layer 2 viendra quand le terrain l'appellera.</p>
+        <a href="https://wa.me/33625492949?text=Salut%20Brice%2C%20c%27est%20bon%20pour%20moi%2C%20on%20lance%20le%20socle%20du%20module%20vente.">Valider et démarrer</a>
+        <p class="deadline">Livraison garantie avant le <strong>13 juillet 2026</strong>, pour tenir ta cible de mi-juillet.</p>
+        <p class="ps">Une question, un ajustement de périmètre ? On en parle avant de lancer.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mark"><span class="badge">BP</span> Brice Pellerin</span>
+    <div>Proposition confidentielle · établie pour Sébastien Rech · impulsion.com</div>
+  </footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
